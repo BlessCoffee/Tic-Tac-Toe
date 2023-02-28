@@ -1,7 +1,6 @@
 from Player import Player
 from game_area import game_area
-from main_menu import title_screen, selection_menu
-
+from terminal_screens import main_menu
 
 
 area = [["#", "#", "#"], 
@@ -18,5 +17,4 @@ print(win)
 
 game_area(area)
 
-title_screen()
-selection_menu()
+main_menu()
