@@ -6,7 +6,6 @@ class Player:
         self.symbol = symbol
     
     
-
     def check_win(self, area):  # Check if the player wins if meets the wining condition
             if area[0][0] == area[0][1] == area[0][2] == self.symbol:
                     return True
