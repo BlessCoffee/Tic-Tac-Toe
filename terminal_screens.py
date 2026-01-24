@@ -1,11 +1,10 @@
 
-import time
+import time, os
 from blessed import Terminal
 
 MENU_OPTIONS = [" New Game ", " Load Game ", " Multiplayer ", "Quit" ] # list of options for main menu
 
 term = Terminal()
-
 
 def title():
     
@@ -21,7 +20,7 @@ def title():
     print(term.bold_cyan(term.center("                     \▓▓   \▓▓ \▓▓▓▓▓▓▓          \▓▓    \▓▓▓▓▓▓▓ \▓▓▓▓▓▓▓          \▓▓    \▓▓▓▓▓▓  \▓▓▓▓▓▓▓  by BlessCoffee ")))  
     print(term.bold_cyan(term.center(" __________________________________________________________________________________________")))
     
-    # Art bu ASCII Generator by https://texteditor.com/multiline-text-art/
+    # Art by ASCII Generator by https://texteditor.com/multiline-text-art/
     
 def menu_options(option = 0):
     
@@ -58,7 +57,7 @@ def menu_options(option = 0):
     return position # returns cursor position of the option in the menu
     
 def option_blink(position):
-    
+    #bugged needs fixing
     print(term.move_up(position), end='')
     print(term.center(term.bold_orange(MENU_OPTIONS[0])))
     print(term.move_down(position), end='')
@@ -68,15 +67,31 @@ def option_blink(position):
     print(term.move_up(position), end='')
     print(term.center(term.bold_orange_reverse(MENU_OPTIONS[0])))
     print(term.move_down(position), end='')
-    
-    
+
 def menu_main():
-    
+    with term.cbreak(), term.hidden_cursor():
+        print(term.home + term.clear_eos)
         title()
-        cur_position = menu_options()
-        while term.inkey(timeout=0.6) != 'q':
-            option_blink(cur_position)
-        print(term.clear())
+        option = menu_options()
+        while True:
+            key = term.inkey(timeout=0.6)
+            if key.name == "KEY_UP":
+                option = (option - 1) % len(MENU_OPTIONS)
+                print(term.home + term.clear_eos)
+                title()
+                menu_options(option)
+            elif key.name == "KEY_DOWN":
+                option = (option + 1) % len(MENU_OPTIONS)
+                print(term.home + term.clear_eos)
+                title()
+                menu_options(option)
+            elif key.name == "KEY_ENTER" or key == "\n":
+                # if option == MENU_OPTIONS.index(" Quit "):
+                # os.system('cls' if os.name == 'nt' else 'clear')
+                # return
+                return option
+            elif key == 'q':
+                os.system('cls' if os.name == 'nt' else 'clear')
+                return len(MENU_OPTIONS) - 1  # Return the index for "Quit" option
+                
             
-    #time.sleep(0.8)
-    #print(term.clear())
