@@ -59,7 +59,7 @@ def option_blink(option):
     print(term.home + term.center(term.move_down(option_postion_x) + term.bold_orange_reverse(MENU_OPTIONS[option])))
 
 def menu_main():
-    with term.cbreak():
+    with term.cbreak(), term.hidden_cursor():
         option = 0
         print(term.home + term.clear_eos)
         title()
