@@ -2,7 +2,7 @@
 import time, os
 from blessed import Terminal
 
-MENU_OPTIONS = [" New Game ", " Load Game ", " Multiplayer ", "Quit" ] # list of options for main menu
+MENU_OPTIONS = [" New Game ", " Load Game ", " Multiplayer ", " Quit " ] # list of options for main menu
 
 term = Terminal()
 
@@ -23,10 +23,8 @@ def title():
     # Art by ASCII Generator by https://texteditor.com/multiline-text-art/
     
 def menu_options(option = 0):
-    
-    print("\n")
-    print(term.bold_orange(term.center("__________________________________________________________________________________________")))
-    print("\n")
+    term.move_xy(0,0)
+    print(term.bold_orange("\n" + term.center("__________________________________________________________________________________________" + "\n")))
     
     if option == 0:
         print(term.center(term.bold_orange_reverse(MENU_OPTIONS[0])))
@@ -53,7 +51,7 @@ def menu_options(option = 0):
     
 def option_blink(option):
     term.move_xy(0,0)
-    option_postion_x = option + 17
+    option_postion_x = option + 15
     print(term.home + term.center(term.move_down(option_postion_x) + term.bold_orange(MENU_OPTIONS[option])))
     time.sleep(0.7)
     print(term.home + term.center(term.move_down(option_postion_x) + term.bold_orange_reverse(MENU_OPTIONS[option])))
